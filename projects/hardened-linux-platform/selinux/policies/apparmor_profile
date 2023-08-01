@@ -1,0 +1,21 @@
+# AppArmor profile for embedded device
+
+#include <tunables/global>
+
+/usr/bin/embedded_app {
+  #include <abstractions/base>
+  
+  # File access
+  /etc/config/* r,
+  /var/log/* w,
+  
+  # Network access
+  network,
+  capability net_bind_service,
+  
+  # Deny everything else
+  deny /etc/passwd r,
+  deny /etc/shadow r,
+  deny /root/** rwx,
+}
+

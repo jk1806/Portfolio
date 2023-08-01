@@ -1,0 +1,19 @@
+{
+  "cgroup_name": "embedded_app",
+  "cpu": {
+    "quota_us": 50000,
+    "period_us": 100000
+  },
+  "memory": {
+    "max": "256M",
+    "swap_max": "128M"
+  },
+  "io": {
+    "read_bps": 1048576,
+    "write_bps": 1048576
+  },
+  "pids": {
+    "max": 100
+  }
+}
+

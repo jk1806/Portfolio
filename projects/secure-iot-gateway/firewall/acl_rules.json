@@ -1,0 +1,31 @@
+{
+  "acl_rules": [
+    {
+      "rule_id": 1,
+      "action": "allow",
+      "protocol": "tcp",
+      "source": "192.168.1.0/24",
+      "destination": "0.0.0.0/0",
+      "ports": [22, 443, 8883],
+      "description": "Allow management and IoT protocols from local network"
+    },
+    {
+      "rule_id": 2,
+      "action": "deny",
+      "protocol": "all",
+      "source": "0.0.0.0/0",
+      "destination": "10.0.0.0/8",
+      "description": "Deny access to internal network"
+    },
+    {
+      "rule_id": 3,
+      "action": "allow",
+      "protocol": "udp",
+      "source": "0.0.0.0/0",
+      "destination": "0.0.0.0/0",
+      "ports": [5684],
+      "description": "Allow CoAP-DTLS"
+    }
+  ]
+}
+

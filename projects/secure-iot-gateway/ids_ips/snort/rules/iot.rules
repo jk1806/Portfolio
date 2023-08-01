@@ -1,0 +1,14 @@
+# Snort rules for IoT devices
+
+# MQTT brute force detection
+alert tcp any 8883 -> any any (msg:"MQTT brute force attempt"; content:"CONNECT"; threshold:type threshold, track by_src, count 10, seconds 60; sid:1000001;)
+
+# CoAP flooding
+alert udp any 5684 -> any any (msg:"CoAP flooding detected"; threshold:type threshold, track by_src, count 100, seconds 10; sid:1000002;)
+
+# Suspicious TLS handshake
+alert tcp any any -> any 443 (msg:"Suspicious TLS version"; content:"|03 00|"; sid:1000003;)
+
+# IoT device scanning
+alert tcp any any -> any 1883 (msg:"MQTT port scan"; flags:S; threshold:type threshold, track by_src, count 5, seconds 60; sid:1000004;)
+

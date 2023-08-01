@@ -1,0 +1,26 @@
+{
+  "cppcheck": {
+    "enabled": true,
+    "checks": [
+      "all",
+      "unusedFunction",
+      "missingInclude"
+    ],
+    "suppressions": [
+      "missingIncludeSystem"
+    ]
+  },
+  "clang_tidy": {
+    "enabled": true,
+    "checks": [
+      "*",
+      "-readability-*",
+      "-performance-*"
+    ]
+  },
+  "output": {
+    "format": "json",
+    "directory": "reports"
+  }
+}
+

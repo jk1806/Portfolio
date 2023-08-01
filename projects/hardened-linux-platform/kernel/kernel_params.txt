@@ -1,0 +1,30 @@
+# Kernel hardening parameters
+
+# Address Space Layout Randomization
+kernel.randomize_va_space=2
+
+# Kernel pointer restrictions
+kernel.kptr_restrict=2
+
+# Dmesg restrictions
+kernel.dmesg_restrict=1
+
+# Unprivileged BPF
+kernel.unprivileged_bpf_disabled=1
+
+# User namespaces
+user.max_user_namespaces=0
+
+# KASLR
+kernel.kaslr=1
+
+# Stack protector (compile-time)
+# CONFIG_STACKPROTECTOR_STRONG=y
+
+# RELRO (compile-time)
+# CONFIG_RELOCATABLE=y
+
+# Additional hardening
+kernel.unprivileged_userns_clone=0
+net.core.bpf_jit_harden=2
+

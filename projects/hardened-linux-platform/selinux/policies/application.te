@@ -1,0 +1,19 @@
+# SELinux policy for application
+
+policy_module(application, 1.0.0);
+
+type application_t;
+type application_exec_t;
+type application_data_t;
+
+# Application can execute
+type_transition application_t application_exec_t : process application_t;
+
+# Application data access
+allow application_t application_data_t : file { read write };
+allow application_t application_data_t : dir { read write search };
+
+# Network access
+allow application_t self : tcp_socket { create connect };
+allow application_t self : udp_socket { create };
+

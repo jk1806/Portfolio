@@ -1,0 +1,25 @@
+# SELinux policy for embedded device
+
+policy_module(embedded_device, 1.0.0);
+
+# Device type
+type embedded_device_t;
+type embedded_device_exec_t;
+type embedded_device_data_t;
+
+# File contexts
+type_transition embedded_device_t embedded_device_exec_t : process embedded_device_t;
+type_transition embedded_device_t embedded_device_data_t : file embedded_device_data_t;
+
+# Allow embedded device to read/write its own data
+allow embedded_device_t embedded_device_data_t : file { read write };
+allow embedded_device_t embedded_device_data_t : dir { read write search };
+
+# Network access
+allow embedded_device_t self : tcp_socket { create bind listen accept connect };
+allow embedded_device_t self : udp_socket { create bind };
+
+# System access
+allow embedded_device_t dev_t : chr_file { read write };
+allow embedded_device_t sysfs_t : file { read };
+

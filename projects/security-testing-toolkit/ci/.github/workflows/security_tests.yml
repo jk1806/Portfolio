@@ -1,0 +1,63 @@
+name: Security Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck clang-tidy
+      
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=all --xml --xml-version=2 . 2> cppcheck.xml
+      
+      - name: Run clang-tidy
+        run: |
+          clang-tidy --list-checks
+      
+  dynamic-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind
+      
+      - name: Build with sanitizers
+        run: |
+          gcc -fsanitize=address -fsanitize=undefined -g -o test test.c
+      
+      - name: Run valgrind
+        run: |
+          valgrind --leak-check=full ./test
+  
+  fuzzing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install AFL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y afl
+      
+      - name: Build fuzz target
+        run: |
+          afl-gcc -o fuzz_target fuzz_target.c
+      
+      - name: Run fuzzer
+        run: |
+          timeout 60 afl-fuzz -i afl_input -o afl_output -- ./fuzz_target @@ || true
+

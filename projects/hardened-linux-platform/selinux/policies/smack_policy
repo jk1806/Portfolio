@@ -1,0 +1,20 @@
+# SMACK (Simplified Mandatory Access Control) policy
+
+# Labels
+embedded_app="EmbeddedApp"
+system_files="SystemFiles"
+network_service="NetworkService"
+
+# Access rules
+embedded_app SystemFiles r
+embedded_app NetworkService rw
+network_service SystemFiles r
+
+# Default labels
+* SystemFiles r
+* embedded_app rw
+
+# Transmute rules
+embedded_app SystemFiles rwx
+network_service SystemFiles rwx
+

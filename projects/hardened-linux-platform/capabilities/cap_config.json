@@ -1,0 +1,19 @@
+{
+  "processes": {
+    "embedded_app": {
+      "keep_caps": [
+        "CAP_NET_BIND_SERVICE",
+        "CAP_SYS_TIME"
+      ],
+      "drop_caps": "all"
+    },
+    "network_service": {
+      "keep_caps": [
+        "CAP_NET_BIND_SERVICE",
+        "CAP_NET_ADMIN"
+      ],
+      "drop_caps": "all"
+    }
+  }
+}
+

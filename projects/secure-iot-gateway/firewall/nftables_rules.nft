@@ -1,0 +1,42 @@
+#!/usr/sbin/nft -f
+# nftables firewall rules for IoT gateway
+
+# Flush existing rules
+flush ruleset
+
+# Define table
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy drop;
+        
+        # Allow loopback
+        iif lo accept
+        
+        # Allow established connections
+        ct state established,related accept
+        
+        # Allow SSH
+        tcp dport 22 accept
+        
+        # Allow MQTT-TLS
+        tcp dport 8883 accept
+        
+        # Allow CoAP-DTLS
+        udp dport 5684 accept
+        
+        # Allow HTTPS
+        tcp dport 443 accept
+        
+        # Log dropped packets
+        log prefix "NFTABLES-DROPPED: " drop
+    }
+    
+    chain forward {
+        type filter hook forward priority 0; policy drop;
+    }
+    
+    chain output {
+        type filter hook output priority 0; policy accept;
+    }
+}
+

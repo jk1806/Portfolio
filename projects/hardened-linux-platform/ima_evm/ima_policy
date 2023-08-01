@@ -1,0 +1,15 @@
+# IMA policy for embedded device
+
+# Measure all executables
+measure func=BPRM_CHECK mask=MAY_EXEC
+
+# Measure all files opened for read
+measure func=FILE_MEASURE mask=MAY_READ
+
+# Appraise executables and libraries
+appraise func=BPRM_CHECK mask=MAY_EXEC
+appraise func=MMAP_CHECK mask=MAY_EXEC
+
+# Require signature for kernel modules
+appraise func=MODULE_CHECK
+
