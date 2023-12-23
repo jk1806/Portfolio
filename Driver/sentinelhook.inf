@@ -1,0 +1,64 @@
+;
+; SentinelHook Driver Installation File
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ManufacturerName%
+DriverVer=12/22/2023,1.0.0.0
+CatalogFile=sentinelhook.cat
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+SentinelHook_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+sentinelhook.sys = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%SentinelHook.DeviceDesc%=SentinelHook_Device, Root\SentinelHook
+
+[SentinelHook_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+sentinelhook.sys
+
+;-------------- Service installation
+[SentinelHook_Device.NT.Services]
+AddService = SentinelHook,%SPSVCINST_ASSOCSERVICE%, SentinelHook_Service_Inst
+
+; -------------- SentinelHook driver install sections
+[SentinelHook_Service_Inst]
+DisplayName    = %SentinelHook.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\sentinelhook.sys
+
+[SentinelHook_Device.NT.Wdf]
+KmdfService =  SentinelHook, SentinelHook_wdfsect
+
+[SentinelHook_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="SentinelHook Project"
+SentinelHook.DeviceDesc="SentinelHook Telemetry Driver"
+SentinelHook.SVCDESC="SentinelHook Kernel Driver"
+DiskName="SentinelHook Installation Disk"
+

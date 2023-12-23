@@ -1,0 +1,51 @@
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.dll
+*.exe
+
+# Driver build outputs
+*.sys
+# *.inf  # Keep .inf files for installation
+*.cat
+*.wdf
+*.cer
+*.pfx
+
+# WDK
+*.vcxproj.user
+*.vcxproj.filters
+
+# Build logs
+*.log
+build.log
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo
+
+# Test signing
+testcert.pfx
+testcert.cer
+
